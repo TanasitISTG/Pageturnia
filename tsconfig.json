@@ -1,4 +1,3 @@
-/* To learn more about this file see: https://angular.io/config/tsconfig. */
 {
   "compileOnSave": false,
   "compilerOptions": {
@@ -21,7 +20,114 @@
     "lib": [
       "ES2022",
       "dom"
-    ]
+    ],
+    "paths": {
+      "@spartan-ng/ui-accordion-helm": [
+        ".\\src/presentation/libs/ui-accordion-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-alert-helm": [
+        ".\\src/presentation/libs/ui-alert-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-alertdialog-helm": [
+        ".\\src/presentation/libs/ui-alertdialog-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-aspectratio-helm": [
+        ".\\src/presentation/libs/ui-aspectratio-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-avatar-helm": [
+        ".\\src/presentation/libs/ui-avatar-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-badge-helm": [
+        ".\\src/presentation/libs/ui-badge-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-button-helm": [
+        ".\\src/presentation/libs/ui-button-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-card-helm": [
+        ".\\src/presentation/libs/ui-card-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-command-helm": [
+        ".\\src/presentation/libs/ui-command-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-dialog-helm": [
+        ".\\src/presentation/libs/ui-dialog-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-icon-helm": [
+        ".\\src/presentation/libs/ui-icon-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-input-helm": [
+        ".\\src/presentation/libs/ui-input-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-label-helm": [
+        ".\\src/presentation/libs/ui-label-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-menu-helm": [
+        ".\\src/presentation/libs/ui-menu-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-popover-helm": [
+        ".\\src/presentation/libs/ui-popover-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-progress-helm": [
+        ".\\src/presentation/libs/ui-progress-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-radiogroup-helm": [
+        ".\\src/presentation/libs/ui-radiogroup-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-scrollarea-helm": [
+        ".\\src/presentation/libs/ui-scrollarea-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-separator-helm": [
+        ".\\src/presentation/libs/ui-separator-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-sheet-helm": [
+        ".\\src/presentation/libs/ui-sheet-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-skeleton-helm": [
+        ".\\src/presentation/libs/ui-skeleton-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-spinner-helm": [
+        ".\\src/presentation/libs/ui-spinner-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-switch-helm": [
+        ".\\src/presentation/libs/ui-switch-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-tabs-helm": [
+        ".\\src/presentation/libs/ui-tabs-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-toggle-helm": [
+        ".\\src/presentation/libs/ui-toggle-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-typography-helm": [
+        ".\\src/presentation/libs/ui-typography-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-table-helm": [
+        ".\\src/presentation/libs/ui-table-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-hovercard-helm": [
+        ".\\src/presentation/libs/ui-hovercard-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-checkbox-helm": [
+        ".\\src/presentation/libs/ui-checkbox-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-tooltip-helm": [
+        ".\\src/presentation/libs/ui-tooltip-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-pagination-helm": [
+        ".\\src/presentation/libs/ui-pagination-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-carousel-helm": [
+        ".\\src/presentation/libs/ui-carousel-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-select-helm": [
+        ".\\src/presentation/libs/ui-select-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-sonner-helm": [
+        ".\\src/presentation/libs/ui-sonner-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-helm-helm": [
+        ".\\src/presentation/libs/ui-helm-helm/src/index.ts"
+      ]
+    }
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

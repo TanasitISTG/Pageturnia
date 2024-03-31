@@ -1,0 +1,55 @@
+<hlm-dialog>
+  @if (!isMobile) {
+    <button id="login" brnDialogTrigger variant="outline" hlmBtn>
+      เข้าสู่ระบบ
+    </button>
+  } @else {
+    <button id="login" brnDialogTrigger variant="outline" hlmBtn>
+      <hlm-icon size="sm" name="lucideLogIn" />
+    </button>
+  }
+  <hlm-dialog-content class="sm:max-w-[425px]" *brnDialogContent="let ctx">
+    <hlm-dialog-header>
+      <h3 hlmDialogTitle>เข้าสู่ระบบ</h3>
+    </hlm-dialog-header>
+    <form [formGroup]="loginForm" (submit)="onSubmit()">
+      <div class="grid gap-4 py-4">
+        <div class="grid grid-cols-4 items-center gap-4">
+          <label hlmLabel for="email" class="text-right">อีเมล</label>
+          <input
+            hlmInput
+            id="email"
+            type="email"
+            placeholder="อีเมล"
+            class="col-span-3"
+            [formControl]="loginForm.controls.email"
+          >
+        </div>
+        <div class="grid grid-cols-4 items-center gap-4">
+          <label hlmLabel for="password" class="text-right">รหัสผ่าน</label>
+          <input
+            [formControl]="loginForm.controls.password"
+            hlmInput
+            id="password"
+            type="password"
+            placeholder="รหัสผ่าน"
+            class="col-span-3"
+          />
+        </div>
+      </div>
+    </form>
+
+    <hlm-dialog-footer class="flex flex-col">
+      <div class="flex justify-between">
+        <button hlmBtn variant="outline">ลืมรหัสผ่าน</button>
+        <button hlmBtn variant="outline" type="submit" (click)="onSubmit()">
+          เข้าสู่ระบบ
+        </button>
+      </div>
+      <div class="flex justify-center items-center mt-4">
+        <p class="text-primary text-sm">ยังไม่มีบัญชีผู้ใช้?</p>
+        <button hlmBtn variant="link">สมัครสมาชิก</button>
+      </div>
+    </hlm-dialog-footer>
+  </hlm-dialog-content>
+</hlm-dialog>

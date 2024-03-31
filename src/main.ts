@@ -1,6 +1,23 @@
 import { bootstrapApplication } from '@angular/platform-browser';
-import { appConfig } from './app/app.config';
-import { AppComponent } from './app/app.component';
+import { AppComponent } from './presentation/app.component';
+import { provideRouter } from '@angular/router';
+import { routes } from './presentation/app.routes';
+import { ApplicationConfig } from '@angular/core';
+import { NovelRepository } from './domain/repositories/novel.repository';
+import { NovelImplementationRepository } from './data/repositories/novel-implementation.repository';
+import { provideHttpClient } from '@angular/common/http';
+import { AuthRepository } from './domain/repositories/auth.repository';
+import { AuthImplementationRepository } from './data/repositories/auth-implementation.repository';
 
-bootstrapApplication(AppComponent, appConfig)
-  .catch((err) => console.error(err));
+const appConfig: ApplicationConfig = {
+  providers: [
+    provideRouter(routes),
+    provideHttpClient(),
+    { provide: NovelRepository, useClass: NovelImplementationRepository },
+    { provide: AuthRepository, useClass: AuthImplementationRepository },
+  ],
+};
+
+bootstrapApplication(AppComponent, appConfig).catch((err) =>
+  console.error(err),
+);

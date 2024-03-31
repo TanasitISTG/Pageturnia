@@ -1,0 +1,39 @@
+<div class="mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl mt-5">
+  <h1>นิยายอัปเดทล่าสุด</h1>
+  <brn-separator hlmSeparator class="mt-2 mb-4" />
+
+  <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+    @if (isLoading) {
+      @for (n of skeleton; track $index) {
+        <div class="flex flex-col">
+          <hlm-skeleton class="w-full h-64 rounded-lg mb-3" />
+          <div class="pt-3">
+            <hlm-skeleton class="h-6 w-1/2 mb-2" />
+            <hlm-skeleton class="h-4 w-2/3 mb-2" />
+            <hlm-skeleton class="h-4 w-1/4 mb-2" />
+          </div>
+        </div>
+      }
+    } @else {
+      @for (novel of novels; track $index) {
+        <div class="flex flex-col">
+          <img
+            src="{{ novel.cover }}"
+            alt="{{ novel.title }}"
+            class="w-full h-64 object-cover rounded-lg overflow-hidden"
+          />
+          <div class="pt-3">
+            <h3 class="text-xl font-semibold mb-2 text-ellipsis whitespace-nowrap overflow-hidden">{{ novel.title }}</h3>
+            @if (novel.chapters.length > 0) {
+              <p hlmBadge class="mb-2 text-ellipsis whitespace-nowrap overflow-hidden">
+                {{ novel.chapters[novel.chapters.length - 1].title }}
+              </p>
+            } @else {
+              <p class="mb-2">ยังไม่มีตอน</p>
+            }
+          </div>
+        </div>
+      }
+    }
+  </div>
+</div>

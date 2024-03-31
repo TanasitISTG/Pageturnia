@@ -26,11 +26,10 @@
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
-              "src/favicon.ico",
-              "src/assets"
+              "src/presentation/assets/icons"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/presentation/assets/styles/styles.scss"
             ],
             "scripts": []
           },
@@ -86,11 +85,10 @@
             "tsConfig": "tsconfig.spec.json",
             "inlineStyleLanguage": "scss",
             "assets": [
-              "src/favicon.ico",
-              "src/assets"
+              "src/presentation/assets/icons"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/presentation/assets/styles/styles.scss"
             ],
             "scripts": []
           }

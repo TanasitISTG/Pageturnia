@@ -1,0 +1,65 @@
+<nav class="p-4">
+  <div class="flex justify-between sm:mx-12">
+    <div class="flex items-center">
+      <a hlmBtn variant="ghost" class="hidden p-1.5 sm:flex" routerLink="/">
+        <img
+          src="/presentation/assets/icons/logo.png"
+          width="128"
+          alt="Pageturnia"
+        />
+      </a>
+
+      <app-nav-bar-sheet class="sm:hidden" />
+
+      <div class="hidden sm:flex sm:space-x-2 ml-4">
+        <a routerLink="/" class="flex items-center">
+          <ng-icon name="lucideHome" class="me-1"></ng-icon>
+          หน้าแรก
+        </a>
+        <a routerLink="/novel" class="flex items-center">
+          <ng-icon name="lucideBook" class="me-1"></ng-icon>
+          นิยาย
+        </a>
+        <a routerLink="/search" class="flex items-center">
+          <ng-icon name="lucideSearch" class="me-1"></ng-icon>
+          ค้นหา
+        </a>
+      </div>
+    </div>
+    <div class="flex gap-2 items-center">
+      <button hlmBtn [brnMenuTriggerFor]="theme" variant="outline" align="end">
+        <hlm-icon name="lucideMoon" size="sm" />
+      </button>
+      <ng-template #theme>
+        <hlm-menu class="w-40">
+          <button
+            hlmMenuItemCheckbox
+            [checked]="(theme$ | async) === 'light'"
+            (click)="setDarkMode('light')"
+          >
+            <hlm-menu-item-check />
+            Light
+          </button>
+          <button
+            hlmMenuItemCheckbox
+            [checked]="(theme$ | async) === 'dark'"
+            (click)="setDarkMode('dark')"
+          >
+            <hlm-menu-item-check />
+            Dark
+          </button>
+          <button
+            hlmMenuItemCheckbox
+            [checked]="(theme$ | async) === 'system'"
+            (click)="setDarkMode('system')"
+          >
+            <hlm-menu-item-check />
+            System
+          </button>
+        </hlm-menu>
+      </ng-template>
+      <app-login-dialog></app-login-dialog>
+    </div>
+  </div>
+</nav>
+<brn-separator hlmSeparator class="mb-4" />
