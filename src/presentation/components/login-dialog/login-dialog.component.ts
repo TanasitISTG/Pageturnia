@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component } from '@angular/core';
 import { HlmButtonDirective } from '@spartan-ng/ui-button-helm';
 import { BrnDialogContentDirective, BrnDialogTriggerDirective } from '@spartan-ng/ui-dialog-brain';
 import { HlmDialogComponent, HlmDialogContentComponent, HlmDialogDescriptionDirective, HlmDialogFooterComponent, HlmDialogHeaderComponent, HlmDialogTitleDirective } from '@spartan-ng/ui-dialog-helm';
@@ -10,6 +10,7 @@ import { provideIcons } from '@ng-icons/core';
 import { HlmIconComponent } from '@spartan-ng/ui-icon-helm';
 import { AuthRepository } from '../../../domain/repositories/auth.repository';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-login-dialog',
@@ -53,11 +54,6 @@ export class LoginDialogComponent {
   }
 
   onSubmit() {
-    // this.authRepository.login();
-    console.log('onSubmit')
-    console.log(this.loginForm.value)
-    this.authRepository.login(this.loginForm.value.email ?? '', this.loginForm.value.password ?? '').subscribe((response) => {
-      console.log(response)
-    })
+    this.authRepository.login(this.loginForm.value.email ?? '', this.loginForm.value.password ?? '').pipe(take(1)).subscribe();
   }
 }
