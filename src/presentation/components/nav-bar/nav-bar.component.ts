@@ -4,7 +4,7 @@ import { HlmButtonDirective } from '@spartan-ng/ui-button-helm';
 import { HlmInputDirective } from '@spartan-ng/ui-input-helm';
 import { HlmLabelDirective } from '@spartan-ng/ui-label-helm';
 import { CommonModule } from '@angular/common';
-import { DarkMode, ThemeService } from '../../../domain/services/theme.service';
+import { ThemeService } from '../../../domain/services/theme.service';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import {
   lucideHome,
@@ -58,8 +58,8 @@ import { NavBarSheetComponent } from '../nav-bar-sheet/nav-bar-sheet.component';
 })
 export class NavBarComponent {
   private _themeService = inject(ThemeService);
-  theme$ = this._themeService.darkMode$;
-  public setDarkMode(theme: DarkMode) {
-    this._themeService.setDarkMode(theme);
+  theme$ = this._themeService.theme$;
+  public toggleDarkMode() {
+    this._themeService.toggleDarkMode();
   }
 }

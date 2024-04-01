@@ -1,51 +1,88 @@
-import { MediaMatcher } from '@angular/cdk/layout';
-import { DOCUMENT, isPlatformBrowser } from '@angular/common';
-import { Injectable, PLATFORM_ID, RendererFactory2, inject, signal } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { ReplaySubject, combineLatest } from 'rxjs';
-
-const DarkModes = ['light', 'dark', 'system'] as const;
-export type DarkMode = (typeof DarkModes)[number];
-
-@Injectable({
+import {
+	inject,
+	Injectable,
+	OnDestroy,
+	OnInit,
+	PLATFORM_ID,
+	RendererFactory2,
+  } from '@angular/core';
+  import { ReplaySubject, Subject, takeUntil, tap } from 'rxjs';
+  import { DOCUMENT, isPlatformBrowser } from '@angular/common';
+  
+  @Injectable({
 	providedIn: 'root',
-})
-export class ThemeService {
+  })
+  export class ThemeService implements OnDestroy {
+	// A. Setting up our dependencies
+	// A.1 since we will access localStorage with AnalogJS
+	// (which can be used for server side rendering)
+	// we will use the PLATFORM_ID to see if we are executing in the browser and
+	// it is available
 	private _platformId = inject(PLATFORM_ID);
+	// A.2 we use Angular's renderer to add/remove the dark class from the html element
 	private _renderer = inject(RendererFactory2).createRenderer(null, null);
+	// A.3 we use Angular's DOCUMENT injection token to avoid directly accessing the document object
 	private _document = inject(DOCUMENT);
-	private _query = inject(MediaMatcher).matchMedia('(prefers-color-scheme: dark)');
-	private _darkMode$ = new ReplaySubject<'light' | 'dark' | 'system'>(1);
-	private _systemDarkMode$ = new ReplaySubject<'light' | 'dark' | 'system'>(1);
-	public darkMode$ = this._darkMode$.asObservable();
-
+  
+	// B. Initializing our in memory theme store
+	// B.1 we want to give every subscriber the current value of our theme
+	// even if they subscribe after the first value was emitted
+	private _theme$ = new ReplaySubject<'light' | 'dark'>(1);
+	// B.2 we expose the current theme so our app can access it and e.g. show
+	// a different icon for the button to toggle it
+	public theme$ = this._theme$.asObservable();
+	// B.3 this emits when the service is destroyed and used to clean up subscriptions
+	private _destroyed$ = new Subject<void>();
+  
+	// C. Sync and listen to theme changes on service creation
 	constructor() {
-		this._systemDarkMode$.next(this._query.matches ? 'dark' : 'light');
-		this._query.onchange = (e: MediaQueryListEvent) => this._systemDarkMode$.next(e.matches ? 'dark' : 'light');
-		this.syncInitialStateFromLocalStorage();
-		this.toggleClassOnDarkModeChanges();
+	  // we check the current value in the localStorage to see what theme was set
+	  // by the code in the index.html file and load that into our _theme$ replaysubject
+	  this.syncThemeFromLocalStorage();
+	  // we also immediately subscribe to our theme$ variable and add/remove
+	  // the dark class from the html element
+	  this.toggleClassOnThemeChanges();
 	}
-
-	private syncInitialStateFromLocalStorage(): void {
-		if (isPlatformBrowser(this._platformId)) {
-			this._darkMode$.next((localStorage.getItem('darkMode') as DarkMode) ?? 'system');
+  
+	// C.1 sync with the theme set in the localStorage by our index.html script tag
+	private syncThemeFromLocalStorage(): void {
+	  // if we are in the browser we know we have access to localstorage
+	  if (isPlatformBrowser(this._platformId)) {
+		// we load the appropriate value from the localStorage into our _theme$ replaysubject
+		this._theme$.next(
+		  localStorage.getItem('theme') === 'dark' ? 'dark' : 'light'
+		);
+	  }
+	}
+	// C.2 Subscribe to theme changes until the service is destroyed
+	// and add/remove class from html element
+	private toggleClassOnThemeChanges(): void {
+	  // until our service is destroyed we subscribe to all changes in the theme$ variable
+	  this.theme$.pipe(takeUntil(this._destroyed$)).subscribe((theme) => {
+		// if it is dark we add the dark class to the html element
+		if (theme === 'dark') {
+		  this._renderer.addClass(this._document.documentElement, 'dark');
+		} else {
+		  // else if is added already, we remove it
+		  if (this._document.documentElement.className.includes('dark')) {
+			this._renderer.removeClass(this._document.documentElement, 'dark');
+		  }
 		}
+	  });
 	}
-	private toggleClassOnDarkModeChanges(): void {
-		combineLatest([this.darkMode$, this._systemDarkMode$])
-			.pipe(takeUntilDestroyed())
-			.subscribe(([darkMode, systemDarkMode]) => {
-				if (darkMode === 'dark' || (darkMode === 'system' && systemDarkMode === 'dark')) {
-					this._renderer.addClass(this._document.documentElement, 'dark');
-				} else {
-					if (this._document.documentElement.className.includes('dark')) {
-						this._renderer.removeClass(this._document.documentElement, 'dark');
-					}
-				}
-			});
+  
+	// D. Expose a public function that allows us to change the theme from anywhere in our application
+	public toggleDarkMode(): void {
+	  const newTheme =
+		localStorage.getItem('theme') === 'dark' ? 'light' : 'dark';
+	  localStorage.setItem('theme', newTheme);
+	  this._theme$.next(newTheme);
 	}
-	public setDarkMode(newMode: DarkMode): void {
-		localStorage.setItem('darkMode', newMode);
-		this._darkMode$.next(newMode);
+  
+	// E. Clean up our subscriptions when the service gets destroyed
+	public ngOnDestroy(): void {
+	  this._destroyed$.next();
+	  this._destroyed$.complete();
 	}
-}
+  }
+  
