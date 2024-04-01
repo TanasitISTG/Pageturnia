@@ -7,14 +7,13 @@
       <hlm-icon class="flex h-4 w-4" name="lucideX" />
     </button>
     <div class="flex items-center pb-2">
-      <a
-        (click)="ctx.close()"
-        hlmBtn
-        variant="ghost"
-        routerLink="/"
-      >
+      <a (click)="ctx.close()" hlmBtn variant="ghost" routerLink="/">
         <img
-          src="/presentation/assets/icons/logo.png"
+          [src]="
+            (theme$ | async) === 'light'
+              ? '/presentation/assets/icons/logo-black.png'
+              : '/presentation/assets/icons/logo-white.png'
+          "
           width="128"
           alt="Pageturnia"
         />

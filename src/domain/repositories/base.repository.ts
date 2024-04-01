@@ -17,6 +17,7 @@ export class BaseRepository extends Subject<any> {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
     }),
+    withCredentials: true,
   };
   retryCount = 3;
   apiUrl = 'https://localhost:7102/api/';

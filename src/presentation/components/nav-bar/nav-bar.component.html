@@ -3,7 +3,11 @@
     <div class="flex items-center">
       <a hlmBtn variant="ghost" class="hidden p-1.5 sm:flex" routerLink="/">
         <img
-          src="/presentation/assets/icons/logo.png"
+          [src]="
+            (theme$ | async) === 'light'
+              ? '/presentation/assets/icons/logo-black.png'
+              : '/presentation/assets/icons/logo-white.png'
+          "
           width="128"
           alt="Pageturnia"
         />
@@ -27,37 +31,13 @@
       </div>
     </div>
     <div class="flex gap-2 items-center">
-      <button hlmBtn [brnMenuTriggerFor]="theme" variant="outline" align="end">
-        <hlm-icon name="lucideMoon" size="sm" />
+      <button hlmBtn variant="outline" (click)="toggleDarkMode()">
+        @if ((theme$ | async) === "light") {
+          <ng-icon name="lucideMoon"></ng-icon>
+        } @else {
+          <ng-icon name="lucideSunDim"></ng-icon>
+        }
       </button>
-      <ng-template #theme>
-        <hlm-menu class="w-40">
-          <button
-            hlmMenuItemCheckbox
-            [checked]="(theme$ | async) === 'light'"
-            (click)="setDarkMode('light')"
-          >
-            <hlm-menu-item-check />
-            สว่าง
-          </button>
-          <button
-            hlmMenuItemCheckbox
-            [checked]="(theme$ | async) === 'dark'"
-            (click)="setDarkMode('dark')"
-          >
-            <hlm-menu-item-check />
-            มืด
-          </button>
-          <button
-            hlmMenuItemCheckbox
-            [checked]="(theme$ | async) === 'system'"
-            (click)="setDarkMode('system')"
-          >
-            <hlm-menu-item-check />
-            ระบบปฏิบัติการ
-          </button>
-        </hlm-menu>
-      </ng-template>
       <app-login-dialog></app-login-dialog>
     </div>
   </div>
